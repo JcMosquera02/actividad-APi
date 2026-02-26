@@ -1,35 +1,37 @@
 import { getCharacters } from "./api.js";
 import { renderCharacters, showLoader, hideLoader, clearCards } from "./dom.js";
 
-const btnCargar = document.getElementById("btnCargar");
-const btnLimpiar = document.getElementById("btnLimpiar");
-const container = document.getElementById("cards");
-const loader = document.getElementById("loader");
+document.addEventListener("DOMContentLoaded", () => {
 
-let characters = [];
+    const btnCargar = document.getElementById("btnCargar");
+    const btnLimpiar = document.getElementById("btnLimpiar");
+    const container = document.getElementById("cards");
+    const loader = document.getElementById("loader");
 
-const delay = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-};
+    let characters = [];
 
-btnCargar.addEventListener("click", async () => {
-    try {
-        showLoader(loader);
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-        await delay(3000);
+    btnCargar.addEventListener("click", async () => {
+        try {
+            showLoader(loader);
 
-        characters = await getCharacters();
+            await delay(3000);
 
-        renderCharacters(characters, container);
+            characters = await getCharacters();
 
-    } catch (error) {
-        console.error(error);
-    } finally {
-        hideLoader(loader);
-    }
-});
+            renderCharacters(characters, container);
 
-btnLimpiar.addEventListener("click", () => {
-    characters = [];
-    clearCards(container);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            hideLoader(loader);
+        }
+    });
+
+    btnLimpiar.addEventListener("click", () => {
+        characters = [];
+        clearCards(container);
+    });
+
 });
