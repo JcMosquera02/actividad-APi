@@ -1,15 +1,35 @@
-const API_URL = "https://rickandmortyapi.com/api/character";
+import { getCharacters } from "./api.js";
+import { renderCharacters, showLoader, hideLoader, clearCards } from "./dom.js";
 
-async function fetchData() {
-    const response = await fetch(API_URL);
-    const data = await response.json();
-    return data.results;
-}
+const btnCargar = document.getElementById("btnCargar");
+const btnLimpiar = document.getElementById("btnLimpiar");
+const container = document.getElementById("cards");
+const loader = document.getElementById("loader");
 
-async function showData() {
-    const data = await fetchData();
-    window.printData(data);
-}
+let characters = [];
 
-document.getElementById("showBtn")
-    .addEventListener("click", showData);
+const delay = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+btnCargar.addEventListener("click", async () => {
+    try {
+        showLoader(loader);
+
+        await delay(3000);
+
+        characters = await getCharacters();
+
+        renderCharacters(characters, container);
+
+    } catch (error) {
+        console.error(error);
+    } finally {
+        hideLoader(loader);
+    }
+});
+
+btnLimpiar.addEventListener("click", () => {
+    characters = [];
+    clearCards(container);
+});

@@ -11,14 +11,20 @@
 
 <body>
 
-  <body>
-    <header>
-      <h1>Personajes Rick & Morty</h1>
-      <button id="showBtn">Consultar</button>
-    </header>
+  <div class="container">
+    <h1>Rick and Morty</h1>
 
-    <section id="container" class="cards-grid"></section>
-    <script src="/javascript/dom.js"></script>
-    <script src="/javascript/scripts.js"></script>
-  </body>
+    <div class="buttons">
+      <button id="btnCargar">Cargar</button>
+      <button id="btnLimpiar">Limpiar</button>
+    </div>
+
+    <div id="loader" class="loader hidden"></div>
+
+    <div id="cards" class="cards"></div>
+  </div>
+
+
+</body>
+
 </html>
